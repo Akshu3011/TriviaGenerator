@@ -57,42 +57,56 @@ var quizQuestions=[
     }
 ];    
 
+
 var quizContainer = document.getElementById('quiz');
 var resultsContainer = document.getElementById('results');
 var submitButton = document.getElementById('getStarted');
+var info = document.querySelector('.timer');
+
 
     //TODO:show questions
-     function showQuestions(quizQuestions){
+     function showQuestions(quizQuestions,quizContainer){
         var output=[];
-        var options;
+        var optionsArr;
 
+       
         for(var i=0; i < quizQuestions.length; i++)
         {
             //reset options array for each question-options
-            options=[];
-
+            optionsArr=[];
+           
             //create options with radio buttons for each questions
             
         for(let element in quizQuestions[i].options)
                 {
-               options.push(
+                    optionsArr.push(
                 '<label>'+
                 '<input type="radio" value="question '+i+'" value="'+element+'">'
-                +element+ ':' +quizQuestions[i].options[element] + '</label>'
+                +element+ ': ' +quizQuestions[i].options[element] + '</label>'
                );
             }
-            console.log(options);
-        }
+        
         
         //get the questions and above options joined
+        output.push('<div class="question">' +quizQuestions[i].question+ '</div>'
+        + '<div class="options">' + optionsArr.join(' ') + '</div>'
+      );
+     
+     
+        }
+          // combine our output list into one string of html and put it on the page
+          console.log(output);
+          info.textContent="";
+          quizContainer.innerHTML = output.join('');
+          
+    }
 
-        
 
-        //add question nd option
+        //add question and option
 
-     }
-
-     showQuestions(quizQuestions);
+     showQuestions(quizQuestions,quizContainer);
+     
+     
 //TODO:show results on submit button
     //TODO:find selected answer and and compare with defined correct answer
     //TODO:save the count of correct and wrong nswers
