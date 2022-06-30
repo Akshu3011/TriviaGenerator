@@ -11,6 +11,13 @@ body{
     background-image: url("../images/starwars3.jpg"); 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
      color: var(--light);
+     -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     
+     background-size: 100% auto;
+     background-repeat: no-repeat;
+     
 }
 /* reset default link styling */
 .link:visited {
@@ -69,8 +76,8 @@ main {
     opacity: 0.78;
 }
 
-#alert {
-    font-size: 24px;
+.result {
+    font-size: 40px;
     margin: 30px;
     text-align: center;
 }
@@ -80,7 +87,7 @@ main {
     margin-top: 50px;
 }
 
-#prompts {
+#main-container {
     text-align: left;
     min-height: 150px;
 }
@@ -90,9 +97,41 @@ main {
     font-size: 22px;
    
 }
+.scoreDisplay{
+
+    font-size: 40px;
+    background-color: aliceblue;
+    color: black;
+    padding: 50px;
+}
+
+.result
+{
+   
+    background: rgb(239,240,73);
+    background: linear-gradient(0deg, rgba(239,240,73,1) 0%, rgba(129,253,45,1) 100%);
+        color: black;
+        padding: 30px;
+        margin: 5px;
+        margin-top: 50px;
+        width: 100%;
+        font-size: 40px;
+        border-radius: 5px;
+        color: white;
+        animation: mymove 1s infinite;
+  }
+  @keyframes mymove {
+    50% {box-shadow: 10px 20px 30px white;}
+  }
+  
+ 
 
 /* mobile layout */
 @media screen and (max-width: 560px) {
+    body{
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
     main {
         width: 90%;
     }

@@ -61,76 +61,149 @@ var quizQuestions=[
 
 var secondsLeft;
 var timerInterval;
-
+var score=0;
+var queNum=0;
 var quizContainer = document.getElementById('quiz');
 var scoreboardContainer = document.getElementById('scoreboard');
 var startQuizContainer = document.querySelector('.start-quiz');
 var timerEl = document.querySelector('#timer');
 var info= document.querySelector(".info");
+var isAnswered=false;
 
 
 //functions
-//1.Initialize the page with quiz info
-
-
-
-
-
-    //TODO:show questions
+    //Display questions with options based on question number parameter
      function showQuestions(queNum){
-        //var queNum=1;
+        document.querySelector(".result").hidden=true;
+        //t questions div, displying question of index question number
         document.getElementById("question").textContent=quizQuestions[queNum].question;
         document.getElementById("button1").textContent= quizQuestions[queNum].options['a'];
         document.getElementById("button2").textContent= quizQuestions[queNum].options['b'];
         document.getElementById("button3").textContent= quizQuestions[queNum].options['c'];
         document.getElementById("button4").textContent= quizQuestions[queNum].options['d'];
         
-       /* for(var i=0;i<4;i==0)
-        {*/
+        //checking the user's answer by sending each click to validate answer
+        for(var i=1;i<=4;i++)
+        {
             document
-            .getElementById("button2")
+            .getElementById("button"+i).disabled=false;
+            document
+            .getElementById("button"+i)
             .addEventListener("click", function () {
               validate(this,queNum);
-            });
+              
+            });  
+        }
         
 
     }
+    
+//Start of Game, it will load the questions on page    
     function startGame(){
-    queNum=1;
+   
     showQuestions(queNum);
-
     }
 
-   /* 
-*/
+
 
     function validate(userAnswer,queNum) {
+        //if timer goes off, game ends
+        if(secondsLeft===0)
+            gameEnds();
+
+        
+            
+        //if user's answer matches with the correct answer, button color changes to green and score variable is incremented
+        
         if (userAnswer.textContent === quizQuestions[queNum].options[quizQuestions[queNum].correctAnswer]){
-          // on correct answer change button color to light green and increment score
-          console.log(userAnswer);
-          userAnswer.setAttribute("style", "background-color: lightgreen");
+            document.querySelector(".result").hidden=true;
+          userAnswer.setAttribute("style", "background-color: #94dd4d");
+
+          //using setTimeout function to get back to the original button color, after 1s 
+          setTimeout(function(){userAnswer.setAttribute("style", "background-color: #FFE81F")},1000);
+
           score++;
+          for(var i=1;i<=4;i++)
+        {
+            document
+            .getElementById("button"+i).disabled=true;
         }
-          // revert after 1 second
-         /* setTimeout(() => {
-            selection.setAttribute("style", "background-color: --var(dark)");
-          }, 1000);
-        } else {
-          // on wrong answer set button color to red and display correct answer below
-          selection.setAttribute("style", "background-color: red");
-          document.getElementById("alert").textContent = `(Answer: ${answers[0]})`
-          // revert after 1 second
-          setTimeout(() => {
-            selection.setAttribute("style", "background-color: --var(dark)");
-            document.getElementById("alert").textContent = "";
-          }, 1000);
+
+        document.querySelector(".result").textContent=" ";
         }
-        // calls next question regardless
-        setTimeout(() => {
-          loadQuestion();
-        }, 1000);*/
+         
+        else
+        {
+         //if user's answer does not match with the correct answer, button color changes to red             
+            userAnswer.setAttribute("style", "background-color: #d72323");
+
+            //using setTimeout function to get back to the original button color, after 1s 
+
+            setTimeout(function(){userAnswer.setAttribute("style", "background-color: #FFE81F")},1000);
+            for(var i=1;i<=4;i++)
+            {
+                document
+                .getElementById("button"+i).disabled=true;
+            }
+            
+          /*  var answerDisplay=document.createElement("button");
+            answerDisplay.className="answerDisplay";
+            
+            document.getElementById("choices").append(answerDisplay);
+           */
+            document.querySelector(".result").hidden=false;
+            document.querySelector(".result").textContent=quizQuestions[queNum].options[quizQuestions[queNum].correctAnswer];
+
+            setTimeout(function(){
+                
+                document.querySelector(".result").textContent=" ";
+                
+            },1000);
+        }
+        
+        //increasing the question number count to get the next question
+        queNum++;
+        console.log(score);
+
+        //game continues till all questions are over
+
+        
+       
+        queNum ===quizQuestions.length ? setTimeout(function(){gameEnds()},1000) : setTimeout(function(){showQuestions(queNum)},1000);
+
+    
       }
 
+
+
+      function gameEnds()
+      {
+            // prevent negative timer
+            if (secondsLeft < 0) {
+              secondsLeft = 0;
+            }
+            // clears questions, buttons, and timer
+            document.getElementById("choices").remove();
+            document.getElementById("timer").remove();
+            document.getElementById("question").remove();
+            clearInterval(timerInterval);
+            //disply score
+            var scoreDisplay=document.createElement("h2");
+            scoreDisplay.className="scoreDisplay"
+            document.getElementById("main-container").append(scoreDisplay);
+            if(score <=1)
+            {
+                scoreDisplay.textContent="Better Luck next time!!! you scored " + score + " points!";
+                
+            }
+            else
+            {
+                scoreDisplay.textContent="Congrats, you scored " + score + " points!";
+
+            }
+            
+        console.log("Game Over");
+      }
 
 //timer function
     function setTime(time) {
@@ -156,6 +229,6 @@ var info= document.querySelector(".info");
  
 //start the game
 // gets game started
-
-setTime(100);    
+document.querySelector(".result").hidden=true;
+setTime(12);    
 startGame();
