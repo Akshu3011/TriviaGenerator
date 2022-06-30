@@ -271,7 +271,7 @@ function validate(userAnswer) {
   for (var i = 1; i <= 4; i++) {document
   .getElementById("button"+i).disabled=false;}
 
-  (queNum-1) === quizQuestions.length
+  queNum === (quizQuestions.length-1)
     ? setTimeout(function () {
         gameEnds();
       }, 1000)
