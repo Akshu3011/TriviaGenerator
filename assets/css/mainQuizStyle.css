@@ -1,0 +1,128 @@
+:root {
+    --light:aliceblue;
+    --dark: #FFE81F;
+}
+
+.link {
+    text-decoration: none;
+    color: var(--light);
+}
+
+/* reset default link styling */
+.link:visited {
+    text-decoration: none;
+    color: var(--light);
+}
+#view-highscores {
+    margin-left: auto;
+}
+#home {
+    float: left;
+}
+header {
+    background-color: black;
+    margin-bottom: 7vh;
+    font-size: 20px;
+    padding: 30px;
+    align-items: center;
+    display: flex;
+}
+main {
+    width: 50%;
+    margin: auto;
+    text-align: center;
+    min-height: 71vh;
+}
+#welcome {
+    font-size: 54px;
+}
+
+#titles {
+    margin: 10vh;
+}
+
+#playButton {
+    background-color: var(--dark);
+    padding: 20px;
+    font-size: 36px;
+    border-radius: 15px;
+    
+}
+
+#choices button {
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 20px;
+    margin: 5px;
+    width: 100%;
+    font-size: 24px;
+    border-radius: 5px;
+}
+
+#choices button:hover {
+    color: white;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+#alert {
+    font-size: 24px;
+    margin: 30px;
+    text-align: center;
+}
+
+#question {
+    font-size: 36px;
+}
+
+#prompts {
+    text-align: left;
+    min-height: 150px;
+}
+
+#timer {
+    margin-top: 5vh;
+    font-size: 22px;
+}
+
+/* mobile layout */
+@media screen and (max-width: 560px) {
+    main {
+        width: 90%;
+    }
+    #choices button {
+        font-size: 18px;
+    }
+    #welcome {
+        font-size: 24px;
+    }
+    #subtitle{
+        font-size: 18px;
+    }
+    header {
+        padding: 12px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+    #playButton {
+        font-size: 20px;
+        padding: 12px;
+    }
+    #qNumber {
+        font-size: 14px;
+    }
+    #question {
+        font-size: 20px;
+    }
+    #timer {
+        margin-top: 10px;
+        font-size: 16px;
+    }
+    #alert {
+        font-size: 16px;
+        margin: 10px;
+    }
+    .rankings {
+        width: 80%;
+    }
+}

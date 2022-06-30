@@ -57,19 +57,36 @@ var quizQuestions=[
     }
 ];    
 
+//Global variables
+
+var secondsLeft;
+var timerInterval;
 
 var quizContainer = document.getElementById('quiz');
-var resultsContainer = document.getElementById('results');
-var submitButton = document.getElementById('getStarted');
-var info = document.querySelector('.timer');
+var scoreboardContainer = document.getElementById('scoreboard');
+var startQuizContainer = document.querySelector('.start-quiz');
+var timerEl = document.querySelector('#timer');
+var info= document.querySelector(".info");
+
+
+//functions
+//1.Initialize the page with quiz info
 
 
     //TODO:show questions
-     function showQuestions(quizQuestions,quizContainer){
+     function showQuestions(){
         var output=[];
         var optionsArr;
+        var queNum=1;
+        document.getElementById("question").textContent=quizQuestions[1].question;
+        document.getElementById("button1").textContent= quizQuestions[1].options['a']
+        document.getElementById("button2").textContent= quizQuestions[1].options['b']
+        document.getElementById("button3").textContent= quizQuestions[1].options['c']
+        document.getElementById("button4").textContent= quizQuestions[1].options['d']
+            
 
-       
+
+     /*  
         for(var i=0; i < quizQuestions.length; i++)
         {
             //reset options array for each question-options
@@ -80,10 +97,7 @@ var info = document.querySelector('.timer');
         for(let element in quizQuestions[i].options)
                 {
                     optionsArr.push(
-                '<label>'+
-                '<input type="radio" value="question '+i+'" value="'+element+'">'
-                +element+ ': ' +quizQuestions[i].options[element] + '</label>'
-               );
+                +element+ ': ' +quizQuestions[i].options[element]);
             }
         
         
@@ -98,15 +112,26 @@ var info = document.querySelector('.timer');
           console.log(output);
           info.textContent="";
           quizContainer.innerHTML = output.join('');
-          
+          */
     }
 
+    function startGame(){
+       
+    }
 
-        //add question and option
-
-     showQuestions(quizQuestions,quizContainer);
-     
-     
+//timer function
+    function setTime(time) {
+        // Sets interval in variable
+        secondsLeft = time;
+        timerEl.textContent = "Time remaining: " + secondsLeft + " seconds";
+        timerInterval = setInterval(function () {
+          secondsLeft--;
+          timerEl.textContent = "Time remaining: " + secondsLeft + " seconds";
+          if (secondsLeft < 1) {
+            gameEnds();
+          }
+        }, 1000);
+      }
 //TODO:show results on submit button
     //TODO:find selected answer and and compare with defined correct answer
     //TODO:save the count of correct and wrong nswers
@@ -115,4 +140,9 @@ var info = document.querySelector('.timer');
 //TODO:Manage edge cases:
     //TODO:User starts the quiz inbetween
     //TODO:quiz should halt at timer stop 
-    
+ 
+//start the game
+// gets game started
+
+setTime(600);    
+showQuestions();

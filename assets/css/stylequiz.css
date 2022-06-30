@@ -6,7 +6,7 @@
 
 }
 body{
-    background-image: url("./images/starwars3.jpg");
+    background-image: url("../images/starwars3.jpg"); 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
      
 }
@@ -27,7 +27,7 @@ h1{
     position: relative;
     
 }
-.quiz-container{
+.container{
     display: flex;
     flex-direction: row;
     justify-content: center;
