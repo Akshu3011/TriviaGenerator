@@ -85,7 +85,7 @@ main {
 
 #question {
     font-size: 36px;
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 #main-container {
@@ -96,6 +96,11 @@ main {
 #timer {
     margin-top: 5vh;
     font-size: 22px;
+   
+}
+#time-deducted{
+    font-size: 20px;
+    color: white;
    
 }
 .scoreDisplay{

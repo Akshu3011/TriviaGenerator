@@ -172,6 +172,8 @@ var startQuizContainer = document.querySelector(".start-quiz");
 var timerEl = document.querySelector("#timer");
 var info = document.querySelector(".info");
 var isAnswered = false;
+var timeDeduct= document.getElementById("time-deducted");
+
 
 //functions
 
@@ -210,8 +212,13 @@ function startGame() {
 
 function validate(userAnswer) {
   //if timer goes off, game ends
-  if (secondsLeft === 0) gameEnds();
+  if (secondsLeft === 0) {
 
+  
+  setTimeout(function () {
+    gameEnds();
+  }, 1000)
+}
   //if user's answer matches with the correct answer, button color changes to green and score variable is incremented
 
   if (
@@ -235,6 +242,13 @@ function validate(userAnswer) {
     document.querySelector(".result").textContent = " ";
   } else {
     //if user's answer does not match with the correct answer, button color changes to red
+    secondsLeft-=10;
+    timeDeduct.hidden=false;
+    setTimeout(function () {
+      timeDeduct.hidden=true;
+        }, 1000);
+    
+
     userAnswer.setAttribute("style", "background-color: #d72323");
 
     //using setTimeout function to get back to the original button color, after 1s
@@ -329,5 +343,6 @@ function setTime(time) {
 //start the game
 // gets game started
 document.querySelector(".result").hidden = true;
+timeDeduct.hidden=true;
 setTime(50);
 startGame();
