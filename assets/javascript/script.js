@@ -73,51 +73,64 @@ var info= document.querySelector(".info");
 //1.Initialize the page with quiz info
 
 
+
+
+
     //TODO:show questions
-     function showQuestions(){
-        var output=[];
-        var optionsArr;
-        var queNum=1;
-        document.getElementById("question").textContent=quizQuestions[1].question;
-        document.getElementById("button1").textContent= quizQuestions[1].options['a']
-        document.getElementById("button2").textContent= quizQuestions[1].options['b']
-        document.getElementById("button3").textContent= quizQuestions[1].options['c']
-        document.getElementById("button4").textContent= quizQuestions[1].options['d']
-            
-
-
-     /*  
-        for(var i=0; i < quizQuestions.length; i++)
-        {
-            //reset options array for each question-options
-            optionsArr=[];
-           
-            //create options with radio buttons for each questions
-            
-        for(let element in quizQuestions[i].options)
-                {
-                    optionsArr.push(
-                +element+ ': ' +quizQuestions[i].options[element]);
-            }
+     function showQuestions(queNum){
+        //var queNum=1;
+        document.getElementById("question").textContent=quizQuestions[queNum].question;
+        document.getElementById("button1").textContent= quizQuestions[queNum].options['a'];
+        document.getElementById("button2").textContent= quizQuestions[queNum].options['b'];
+        document.getElementById("button3").textContent= quizQuestions[queNum].options['c'];
+        document.getElementById("button4").textContent= quizQuestions[queNum].options['d'];
         
+       /* for(var i=0;i<4;i==0)
+        {*/
+            document
+            .getElementById("button2")
+            .addEventListener("click", function () {
+              validate(this,queNum);
+            });
         
-        //get the questions and above options joined
-        output.push('<div class="question">' +quizQuestions[i].question+ '</div>'
-        + '<div class="options">' + optionsArr.join(' ') + '</div>'
-      );
-     
-     
-        }
-          // combine our output list into one string of html and put it on the page
-          console.log(output);
-          info.textContent="";
-          quizContainer.innerHTML = output.join('');
-          */
+
     }
-
     function startGame(){
-       
+    queNum=1;
+    showQuestions(queNum);
+
     }
+
+   /* 
+*/
+
+    function validate(userAnswer,queNum) {
+        if (userAnswer.textContent === quizQuestions[queNum].options[quizQuestions[queNum].correctAnswer]){
+          // on correct answer change button color to light green and increment score
+          console.log(userAnswer);
+          userAnswer.setAttribute("style", "background-color: lightgreen");
+          score++;
+        }
+          // revert after 1 second
+         /* setTimeout(() => {
+            selection.setAttribute("style", "background-color: --var(dark)");
+          }, 1000);
+        } else {
+          // on wrong answer set button color to red and display correct answer below
+          selection.setAttribute("style", "background-color: red");
+          document.getElementById("alert").textContent = `(Answer: ${answers[0]})`
+          // revert after 1 second
+          setTimeout(() => {
+            selection.setAttribute("style", "background-color: --var(dark)");
+            document.getElementById("alert").textContent = "";
+          }, 1000);
+        }
+        // calls next question regardless
+        setTimeout(() => {
+          loadQuestion();
+        }, 1000);*/
+      }
+
 
 //timer function
     function setTime(time) {
@@ -144,5 +157,5 @@ var info= document.querySelector(".info");
 //start the game
 // gets game started
 
-setTime(600);    
-showQuestions();
+setTime(100);    
+startGame();
