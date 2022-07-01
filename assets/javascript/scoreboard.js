@@ -1,22 +1,22 @@
-let table = document.createElement('table');
-let thead = document.createElement('thead');
-let tbody = document.createElement('tbody');
+var highScores = [];
+var scores = document.querySelector(".scores");
+var clear = document.querySelector(".reset");
 
-table.appendChild(thead);
-table.appendChild(tbody);
 
-// Adding the entire table to the body tag
-document.getElementById('body').appendChild(table);
+var scoreVal=JSON.parse(localStorage.getItem("newScore"));
 
-let row_1 = document.createElement('tr');
-let heading_1 = document.createElement('th');
-heading_1.innerHTML = "Sr. No.";
-let heading_2 = document.createElement('th');
-heading_2.innerHTML = "Name";
-let heading_3 = document.createElement('th');
-heading_3.innerHTML = "Score";
+console.log(scoreVal);
 
-row_1.appendChild(heading_1);
-row_1.appendChild(heading_2);
-row_1.appendChild(heading_3);
-thead.appendChild(row_1);
+
+var scoreTable=document.querySelector(".fl-table");
+
+scoreTable.rows[1].cells[1].innerHTML = scoreVal[0];
+
+
+
+var clear=document.querySelector(".reset");
+clear.addEventListener("click", function() {
+    // clear everything
+    scoreTable.hidden=true;
+    localStorage.removeItem("scoreVal");
+})
