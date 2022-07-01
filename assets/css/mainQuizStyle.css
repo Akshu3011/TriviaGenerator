@@ -154,13 +154,7 @@ main {
         margin-bottom: 15px;
         font-size: 14px;
     }
-    #playButton {
-        font-size: 20px;
-        padding: 12px;
-    }
-    #qNumber {
-        font-size: 14px;
-    }
+  
     #question {
         font-size: 20px;
     }

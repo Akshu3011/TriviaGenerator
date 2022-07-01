@@ -1,7 +1,3 @@
-//TODO:Store the username in ls
-//TODO:Access the username on quiz page
-
-//TODO:generate a quiz
 //Quiz questionbank with correct answer
 
 var quizQuestions = [
@@ -118,14 +114,14 @@ var quizQuestions = [
     correctAnswer: "b",
   },
   {
-    question: "In which battle does the Rebel Alliance destroy the Death Star?",
+    question: "What are the creatures, living on Endor, that helped the Rebel’s to defeat the second Death Star?",
     options: {
-      a: "The Geonosis Battle",
-      b: "The Coruscant Battle",
-      c: "The Utapau Battle",
-      d: "The Utapau Battle",
+      a: "Ewoks",
+      b: "Wookies",
+      c: "Nerf Herders",
+      d: "Jawas",
     },
-    correctAnswer: "d",
+    correctAnswer: "a",
   },
   {
     question:
@@ -177,10 +173,9 @@ var timeDeduct= document.getElementById("time-deducted");
 
 //functions
 
-//checking the user's answer by sending each click to validate answer
+//user answer click event
 for (var i = 1; i <= 4; i++) {
   
-
   document.getElementById("button" + i).addEventListener("click", function () {
     validate(this);
   });
@@ -210,6 +205,8 @@ function startGame() {
   showQuestions(queNum);
 }
 
+
+//validate the users answer
 function validate(userAnswer) {
   //if timer goes off, game ends
   if (secondsLeft === 0) {
@@ -229,11 +226,15 @@ function validate(userAnswer) {
     userAnswer.setAttribute("style", "background-color: #94dd4d");
 
     console.log("inside the positive if function qnum" + queNum);
+    
     //using setTimeout function to get back to the original button color, after 1s
     setTimeout(function () {
       userAnswer.setAttribute("style", "background-color: #FFE81F");
+      userAnswer.setAttribute("style", "color: black");
+
     }, 1000);
 
+    //score is incremented
     score++;
     for (var i = 1; i <= 4; i++) {
       document.getElementById("button" + i).disabled = true;
@@ -241,23 +242,28 @@ function validate(userAnswer) {
 
     document.querySelector(".result").textContent = " ";
   } else {
-    //if user's answer does not match with the correct answer, button color changes to red
+
+    //for every wrong answer, the timer goes down by 10s
     secondsLeft-=10;
     timeDeduct.hidden=false;
     setTimeout(function () {
       timeDeduct.hidden=true;
         }, 1000);
     
-
+//if user's answer does not match with the correct answer, button color changes to red
+    
     userAnswer.setAttribute("style", "background-color: #d72323");
 
     //using setTimeout function to get back to the original button color, after 1s
 
-    console.log("inside the negative if function qnum" + queNum);
+    
 
     setTimeout(function () {
       userAnswer.setAttribute("style", "background-color: #FFE81F");
+      userAnswer.setAttribute("style", "color: black");
+      
     }, 1000);
+
     for (var i = 1; i <= 4; i++) {
       document.getElementById("button" + i).disabled = true;
     }
@@ -277,9 +283,8 @@ function validate(userAnswer) {
   }
 
   console.log("inside the vlidate function qnum" + queNum);
-  //increasing the question number count to get the next question
-  //  console.log(score);
 
+  //increasing the question number count to get the next question
   //game continues till all questions are over
   
   for (var i = 1; i <= 4; i++) {document
@@ -294,8 +299,11 @@ function validate(userAnswer) {
       }, 1000);
 }
 
+
+//conditions for game end
+
 function gameEnds() {
-  // prevent negative timer
+  // when timer goes to 0
   if (secondsLeft < 0) {
     secondsLeft = 0;
   }
@@ -303,6 +311,7 @@ function gameEnds() {
   document.getElementById("choices").remove();
   document.getElementById("timer").remove();
   document.getElementById("question").remove();
+  document.querySelector(".result").remove();
   clearInterval(timerInterval);
   //disply score
   var scoreDisplay = document.createElement("h2");
@@ -314,9 +323,55 @@ function gameEnds() {
   } else {
     scoreDisplay.textContent = "Congrats, you scored " + score + " points!";
   }
-
-  console.log("Game Over");
+//get the user initials to store the highscore
+  getuserInfo();
 }
+
+
+function getuserInfo() {
+  // get main section to attach to
+  var section = document.querySelector("main");
+  // create form and append to main
+  var form = document.createElement("form");
+  form.id = "form";
+  section.appendChild(form);
+  // create label
+  var label = document.createElement("label");
+  form.appendChild(label);
+  label.textContent = "Your Initials: ";
+  label.setAttribute("for", initialsInput);
+  // create input
+  var initialsInput = document.createElement("input");
+  form.appendChild(initialsInput);
+  initialsInput.setAttribute("type", "text");
+  initialsInput.setAttribute("maxlength", "3");
+  // create submit button
+  var submit = document.createElement("input");
+  submit.setAttribute("type", "submit");
+  submit.setAttribute("value", "Submit");
+  submit.setAttribute("style", "margin: 10px");
+  form.appendChild(submit);
+  // passing the user initials and form to submit event fuction
+  submitEvent(initialsInput, form);
+}
+
+//this will stor the user initial and score to local storage
+function submitEvent(initialsInput, form) {
+  // add submit event
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var initials = initialsInput.value.toUpperCase();
+    // alert for initials are blank
+    if (initials === "") {
+      alert("Initials can't be blank");
+      return;
+    }
+    var newScore = [initials, score];
+    localStorage.setItem("newScore", JSON.stringify(newScore));
+    window.location.href = "../html/highScores.html";
+  });
+}
+
 
 //timer function
 function setTime(time) {
@@ -331,18 +386,11 @@ function setTime(time) {
     }
   }, 1000);
 }
-//TODO:show results on submit button
-//TODO:find selected answer and and compare with defined correct answer
-//TODO:save the count of correct and wrong nswers
-//TODO:Show the overall results on timer end
-//TODO:put a timer for quiz
-//TODO:Manage edge cases:
-//TODO:User starts the quiz inbetween
-//TODO:quiz should halt at timer stop
+
 
 //start the game
 // gets game started
 document.querySelector(".result").hidden = true;
 timeDeduct.hidden=true;
-setTime(50);
+setTime(100);
 startGame();
